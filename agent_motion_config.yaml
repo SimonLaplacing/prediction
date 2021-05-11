@@ -7,7 +7,7 @@ model_params:
   model_architecture: "CVAE"
   latent_dim: 32
   history_step_size: 1
-  history_num_frames: 50
+  history_num_frames: 49
   future_step_size: 1
   future_num_frames: 50
   step_time: 0.1
@@ -55,7 +55,7 @@ train_data_loader:
   key: "scenes/sample.zarr"
   batch_size: 32
   shuffle: True
-  num_workers: 0
+  num_workers: 2
 
 val_data_loader:
   key: "scenes/test.zarr"
@@ -67,5 +67,5 @@ val_data_loader:
 ## Train params
 train_params:
   checkpoint_every_n_steps: 10000
-  epochs: 5
+  epochs: 1
   eval_every_n_steps: 10000
