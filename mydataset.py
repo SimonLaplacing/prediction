@@ -6,14 +6,18 @@ from typing import Optional
 import numpy as np
 
 class MyTrainDataset:
-    def __init__(self, cfg, dm, agents_mask: Optional[np.ndarray] = None):
+    def __init__(self, cfg, dm, agents_mask: Optional[np.ndarray] = None, raster_mode: Optional[np.int] = 0):
         self.cfg = cfg
         self.dm = dm
         self.has_init = False
         self.agents_mask = agents_mask
+        self.raster_mode = raster_mode
     def initialize(self, worker_id):
         print('initialize called with worker_id', worker_id)
-        rasterizer = build_rasterizer(self.cfg, self.dm)
+        if self.raster_mode:
+            rasterizer = build_rasterizer(self.cfg, self.dm)
+        else:
+            rasterizer = None
         train_cfg = self.cfg["train_data_loader"]
         train_zarr = ChunkedDataset(self.dm.require(train_cfg["key"])).open(cached=False)  # try to turn off cache
         self.dataset = AgentDataset(self.cfg, train_zarr, rasterizer, self.agents_mask)
