@@ -6,9 +6,10 @@ from typing import Optional
 import numpy as np
 
 class MyTrainDataset:
-    def __init__(self, cfg, dm, agents_mask: Optional[np.ndarray] = None, raster_mode: Optional[np.int] = 0):
+    def __init__(self, cfg, dm, length, agents_mask: Optional[np.ndarray] = None, raster_mode: Optional[np.int] = 0):
         self.cfg = cfg
         self.dm = dm
+        self.length = length
         self.has_init = False
         self.agents_mask = agents_mask
         self.raster_mode = raster_mode
@@ -27,7 +28,7 @@ class MyTrainDataset:
         self.has_init = False
     def __len__(self):
         # note you have to figure out the actual length beforehand since once the rasterizer and/or AgentDataset been constructed, you cannot pickle it anymore! So we can't compute the size from the real dataset. However, DataLoader require the len to determine the sampling.
-        return 111634
+        return self.length
     def __getitem__(self, index):
         return self.dataset[index]    
 

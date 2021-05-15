@@ -6,6 +6,8 @@ format_version: 4
 model_params:
   model_architecture: "CVAE"
   latent_dim: 128
+  num_layers: 2
+  bidirectional: True
   history_step_size: 1
   history_num_frames: 49
   future_step_size: 1
@@ -52,13 +54,13 @@ raster_params:
 ###################
 ## Data loader options
 train_data_loader:
-  key: "scenes/sample.zarr"
+  key: "scenes/train.zarr"
   batch_size: 32
   shuffle: True
   num_workers: 2
 
 val_data_loader:
-  key: "scenes/sample.zarr"
+  key: "scenes/test.zarr"
   batch_size: 32
   shuffle: False
   num_workers: 0
