@@ -54,13 +54,13 @@ raster_params:
 ###################
 ## Data loader options
 train_data_loader:
-  key: "scenes/train.zarr"
+  key: "scenes/sample.zarr"
   batch_size: 16
   shuffle: True
   num_workers: 2
 
 val_data_loader:
-  key: "scenes/test.zarr"
+  key: "scenes/sample.zarr"
   batch_size: 16
   shuffle: False
   num_workers: 2
@@ -68,6 +68,8 @@ val_data_loader:
 ###################
 ## Train params
 train_params:
-  checkpoint_every_n_steps: 10000
+ # device 1 for GPU_training
+  device: 1
+#   checkpoint_every_n_steps: 10000
   epochs: 1
-  eval_every_n_steps: 10000
+#   eval_every_n_steps: 10000
