@@ -4,7 +4,7 @@ format_version: 4
 ###################
 ## Model options
 mode:
-  load_mode: True
+  load_mode: False
   
 model_params:
   model_architecture: "CVAE"
@@ -57,7 +57,7 @@ raster_params:
 ###################
 ## Data loader options
 train_data_loader:
-  key: "scenes/sample.zarr"
+  key: "scenes/train.zarr"
   batch_size: 16
   shuffle: True
   num_workers: 3
@@ -66,7 +66,7 @@ val_data_loader:
   key: "scenes/sample.zarr"
   batch_size: 16
   shuffle: False
-  num_workers: 3
+  num_workers: 4
 
 ###################
 ## Train params
