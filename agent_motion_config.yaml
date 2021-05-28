@@ -4,7 +4,7 @@ format_version: 4
 ###################
 ## Model options
 mode:
-  load_mode: False
+  load_mode: True
   
 model_params:
   model_architecture: "CVAE"
@@ -12,7 +12,7 @@ model_params:
   num_layers: 2
   bidirectional: True
   history_step_size: 1
-  history_num_frames: 49
+  history_num_frames: 9
   future_step_size: 1
   future_num_frames: 50
   step_time: 0.1
