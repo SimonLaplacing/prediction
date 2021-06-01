@@ -12,7 +12,7 @@ model_params:
   num_layers: 2
   bidirectional: True
   history_step_size: 1
-  history_num_frames: 9
+  history_num_frames: 49
   future_step_size: 1
   future_num_frames: 50
   step_time: 0.1
@@ -59,16 +59,16 @@ raster_params:
 ###################
 ## Data loader options
 train_data_loader:
-  key: "scenes/sample.zarr"
+  key: "scenes/train.zarr"
   batch_size: 16
   shuffle: True
-  num_workers: 2
+  num_workers: 3
 
 val_data_loader:
-  key: "scenes/sample.zarr"
+  key: "scenes/validate.zarr"
   batch_size: 16
   shuffle: False
-  num_workers: 2
+  num_workers: 3
 
 ###################
 ## Train params
