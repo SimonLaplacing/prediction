@@ -8,13 +8,14 @@ from typing import Optional
 import numpy as np
 
 class MyTrainDataset(Dataset):
-    def __init__(self, cfg, dm, length, agents_mask: Optional[np.ndarray] = None, raster_mode: Optional[np.int] = 0):
+    def __init__(self, cfg, dm, length, agents_mask: Optional[np.ndarray] = None, raster_mode: Optional[np.int] = 0, num_classes = 3):
         self.cfg = cfg
         self.dm = dm
         self.length = length
         self.has_init = False
         self.agents_mask = agents_mask
         self.raster_mode = raster_mode
+        self.num_classes = num_classes
     def initialize(self, worker_id):
         print('initialize called with worker_id', worker_id)
         if self.raster_mode:
@@ -32,8 +33,19 @@ class MyTrainDataset(Dataset):
         # note you have to figure out the actual length beforehand since once the rasterizer and/or AgentDataset been constructed, you cannot pickle it anymore! So we can't compute the size from the real dataset. However, DataLoader require the len to determine the sampling.
         return self.length
 
+    def get_label(self, cur_yaw, future_yaw):
+        phi = 2*np.pi / self.num_classes
+        label = np.zeros(self.num_classes)
+        diff = future_yaw[-1] - cur_yaw
+        for k in range(self.num_classes):
+            if np.pi-(k+1)*phi<diff<np.pi-k*phi:
+                label[k]=1
+        del phi, diff
+        return label
+
     def __getitem__(self, index):
-        return self.dataset[index] 
+        label = self.get_label(self.dataset[index]['yaw'],self.dataset[index]['target_yaws'])
+        return self.dataset[index], label   
 
 def my_dataset_worker_init_func(worker_id):
     worker_info = get_worker_info()
